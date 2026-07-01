@@ -45,7 +45,7 @@ Eu precisei adaptar um pouco o Laplaciano para conseguir executar no HHL.
 2. Laplacianos podem ter autovalores nulos, o que o HHL não aceita. Então, foi feito uma remoção de de kernel que faz a transformação (**remover_nucleo**):
 
 $$
-L_sn = L + \gamma P_1
+L_{sem\_ nucleo} = L + \gamma P_1
 $$
 
 **carregar**: Carrega as matrizes dos arguivos.
