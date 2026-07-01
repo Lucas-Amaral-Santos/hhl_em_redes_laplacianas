@@ -58,7 +58,7 @@ $$
 Apenas executamos o circuito do HHL, montando subrotina a subrotina. Cada subrotina montada porta a porta.
 
 **qpe_exact**: Monta o Quantum Phase Estimation (QPE).
-**build_U_pows_from_exact**: Monta uma lista de potências de $U$'s ($U^2^0, U^2^1, ..., U^2^{\text{precision}}$). Lembrando, o U é a codificação da matriz.
+**build_U_pows_from_exact**: Monta uma lista de potências de $U$'s ($U^{2^0}, U^{2^1}, ..., U^{2^{\text{precision}}}$). Lembrando, o U é a codificação da matriz.
 **rotacoes_genericas**: Rotação responsável por inverter os autovalores($\frac{1}{\lambda}$)
 **hhl_laplaciano**: Monta todas as subrotinas
 **run_simulation**: Roda o circuito em im simulador quântico. Não usei ruído.
