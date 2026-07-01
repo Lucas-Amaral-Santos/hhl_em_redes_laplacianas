@@ -1,7 +1,7 @@
 # HHL em redes Laplacianas
 
 ## Gera Matrizes
-O primeiro arquivo a ser execuatdo é **gera_matrizes**. Este gerará as matrizes nas três topologias descritas no artigo.
+O primeiro arquivo a ser executado é **gera_matrizes**. Este gerará as matrizes nas três topologias descritas no artigo.
     1. Rede
     **grid_graph**
     2. Árvore
@@ -9,17 +9,17 @@ O primeiro arquivo a ser execuatdo é **gera_matrizes**. Este gerará as matrize
     3. Erdős–Rényi esparso
     **erdos_renyi_sparse**
 
-Em seguida Monta a matriz de Laplace.
-**weighted_laplacian**
+Em seguida Monta a matriz de Laplace:
+**weighted_laplacian**.
 
 Gera o vetor corrente b:
-**random_current_vector**
+**random_current_vector**.
 
-Soluciona classicamente utilizando as Chlesky e Descida de Gradiente (usando numpy mesmo).
-**solve_classical**
+Soluciona classicamente utilizando as Chlesky e Descida de Gradiente (usando numpy mesmo):
+**solve_classical**.
 
 Calcula o numero condicional da matriz dada:
-**condition_number**
+**condition_number**.
 
 O **build_instance** usa todas as anteriores para gerar as matrizes com todas as informações necessárias. Usa o método *np.savez* para salvar as matrizes com todas as informações úteis possíveis.
 
@@ -59,6 +59,7 @@ Apenas executamos o circuito do HHL, montando subrotina a subrotina. Cada subrot
 
 **qpe_exact**: Monta o Quantum Phase Estimation (QPE).
 **build_U_pows_from_exact**: Monta uma lista de potências de $U$'s ($U^{2^0}, U^{2^1}, ..., U^{2^{\text{precision}}}$). Lembrando, o U é a codificação da matriz.
+
 **rotacoes_genericas**: Rotação responsável por inverter os autovalores($\frac{1}{\lambda}$)
 **hhl_laplaciano**: Monta todas as subrotinas
 **run_simulation**: Roda o circuito em im simulador quântico. Não usei ruído.
