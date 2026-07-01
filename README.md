@@ -15,7 +15,7 @@ Em seguida Monta a matriz de Laplace:
 Gera o vetor corrente b:
 **random_current_vector**.
 
-Soluciona classicamente utilizando as Chlesky e Descida de Gradiente (usando numpy mesmo):
+Soluciona classicamente utilizando Cholesky e Descida de Gradiente (usando numpy mesmo):
 **solve_classical**.
 
 Calcula o numero condicional da matriz dada:
@@ -41,16 +41,16 @@ Carrega as matrizes e executa.
 ## Adaptador Laplaciano
 
 Eu precisei adaptar um pouco o Laplaciano para conseguir executar no HHL.
-1. As matrizes de Laplace precisam ter dimensões potência de 2. **eh_potencia_de_2** chaca isso.
+1. As matrizes de Laplace precisam ter dimensões potência de 2. A função **eh_potencia_de_2** checa isso.
 2. Laplacianos podem ter autovalores nulos, o que o HHL não aceita. Então, foi feito uma remoção de de kernel que faz a transformação (**remover_nucleo**):
 
 $$
 L_{sem\_ nucleo} = L + \gamma P_1
 $$
 
-**carregar**: Carrega as matrizes dos arguivos.
+**carregar**: Carrega as matrizes dos arquivos.
 
-**preparar**: Adequa as instâncias para o HHL. Além das duas mencionadas, define t, precision (numero de qubits necessários para represenbtaro autovalor). Também estamos arrendondado os autovalores para rodar, já que o circuito do HHL, só está codificado para inteiros. E noramalizamos tudo, já que circuito quânticos são representados por vetores e operadores de norma 1.
+**preparar**: Adequa as instâncias para o HHL. Além das duas mencionadas, define $t$, precision (numero de qubits necessários para representar o autovalor). Também estamos arrendondado os autovalores para rodar, já que o circuito do HHL só está codificado para inteiros. E normalizamos tudo, já que circuito quânticos são representados por vetores e operadores de norma 1.
 
 
 ## HHL Laplaciano
