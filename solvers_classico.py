@@ -53,13 +53,6 @@ def cholesky_solve(A: np.ndarray, b: np.ndarray):
 # Descida de Gradiente (steepest descent)
 def gradient_descent_solve(A: np.ndarray, b: np.ndarray, x0=None,
                             tol: float = 1e-8, max_iter: int = 20_000):
-    """
-    Minimiza f(x) = 1/2 x^T A x - b^T x (equivalente a A x = b, A SPD).
-    A cada passo: r = b - A x (residual = -gradiente)
-                  alpha = (r^T r) / (r^T A r)   <- passo ótimo (line search exato)
-                  x <- x + alpha * r
-    Retorna x, histórico de ||r|| por iteração, nº de iterações até convergir.
-    """
     n = A.shape[0]
     x = np.zeros(n) if x0 is None else x0.copy()
     r = b - A @ x
@@ -77,8 +70,6 @@ def gradient_descent_solve(A: np.ndarray, b: np.ndarray, x0=None,
             return x, np.array(hist), k
     return x, np.array(hist), max_iter
 
-
-# Pipeline: rodar sobre todas as instâncias e validar
 
 def regularize(L, eps=1e-10):
     n = L.shape[0]

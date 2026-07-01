@@ -5,36 +5,7 @@ O notebook hhl_laplaciano exige:
     - matriz Hermitiana SPD (Laplaciano de grafo conexo)
 """
 import numpy as np
-import numpy as np
-from qiskit import QuantumCircuit, QuantumRegister
-from qiskit.circuit.library import QFT, UnitaryGate
-from qiskit.quantum_info import Statevector
-from scipy.linalg import expm
 
-
-def qpe_exact(circuit: QuantumCircuit, U_pows, reg_clock, reg_b, precision: int, inverse=False):
-    b_qubits = [reg_b[j] for j in range(reg_b.size)]
-
-    if not inverse:
-        circuit.h(reg_clock)
-        for i in range(precision):
-            circuit.append(U_pows[i].control(1), [reg_clock[i]] + b_qubits)
-    else:
-        for i in range(precision):
-            circuit.append(U_pows[precision-i-1].control(1), [reg_clock[i]] + b_qubits)
-        circuit.h(reg_clock)
-
-
-def build_U_pows_from_exact(H: np.ndarray, t: float, n: int, precision: int):
-    H = np.asarray(H, dtype=complex)
-    H = 0.5*(H + H.conj().T)
-    U = expm(-1j * H * t)
-
-    U_pows = []
-    for i in range(precision):
-        Ui = np.linalg.matrix_power(U, 2**i)
-        U_pows.append(UnitaryGate(Ui, label=f"U^{2**i}"))
-    return U_pows
 
 
 def carregar(path):
@@ -61,7 +32,7 @@ def remover_nucleo(L, gamma=None):
 
 def preparar(inst, precision):
     """
-    Converte uma instância (dict de carregar()) em entradas prontas p/ o HHL
+    Converte uma instância (dict de carregar()) em entradas prontas para o HHL
     """
     L, b = inst["L"], inst["b"]
     N = L.shape[0]
@@ -95,24 +66,6 @@ def preparar(inst, precision):
         "gamma": gamma, "x_chol": inst["x_chol"], "kappa": inst["kappa"],
         "name": inst["name"],
     }
-
-
-def sonda_codigos_qpe(H, t, precision, autovetor):
-
-
-    n = int(round(np.log2(H.shape[0])))
-    clk = QuantumRegister(precision, "c"); b = QuantumRegister(n, "b")
-    qc = QuantumCircuit(clk, b)
-    qc.prepare_state(list(np.asarray(autovetor, float)), [b[j] for j in range(n)])
-    Up = build_U_pows_from_exact(H, t, precision)
-    qpe_exact(qc, Up, clk, b, precision, inverse=False)
-    qc.append(QFT(precision, inverse=True), clk)
-    sv = Statevector.from_instruction(qc).data
-    pc = np.zeros(2 ** precision)
-    for idx, p in enumerate(np.abs(sv) ** 2):
-        pc[idx & ((1 << precision) - 1)] += p
-    return int(np.argmax(pc)), float(pc.max())
-
 
 if __name__ == "__main__":
     import glob

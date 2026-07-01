@@ -52,7 +52,7 @@ def weighted_laplacian(G: nx.Graph, r_low=0.5, r_high=2.0):
 
 def random_current_vector(n: int) -> np.ndarray:
     b = RNG.normal(size=n)
-    b -= b.mean()          # projeta em b perp 1
+    b -= b.mean()         
     return b / np.linalg.norm(b)
 
 
@@ -70,7 +70,7 @@ def solve_classical(L: np.ndarray, b: np.ndarray, eps_reg: float = 1e-10):
     x_chol = cho_solve((c, low), b)
     x_chol -= x_chol.mean()  # remove componente no núcleo
 
-    # Gradiente Conjugado (scipy.sparse.linalg.cg)
+    # Gradiente Conjugado
     x_cg, info = cg(L_reg, b, rtol=1e-10, atol=0.0)
     x_cg -= x_cg.mean()
 
@@ -78,16 +78,13 @@ def solve_classical(L: np.ndarray, b: np.ndarray, eps_reg: float = 1e-10):
 
 
 def condition_number(L: np.ndarray):
-    """kappa = lambda_max / lambda_2 (menor autovalor não nulo)."""
+    # kappa = lambda_max / lambda_2 (menor autovalor não nulo)
     eigvals = np.sort(np.linalg.eigvalsh(L))
     lam2 = eigvals[1]   # eigvals[0] ~ 0
     lam_max = eigvals[-1]
     return lam_max / lam2, eigvals
 
 
-# ---------------------------------------------------------------------------
-# 5. Pipeline: gera, resolve, salva instância para a parte quântica
-# ---------------------------------------------------------------------------
 
 def build_instance(name: str, G: nx.Graph, out_dir: str = "."):
     n = G.number_of_nodes()
